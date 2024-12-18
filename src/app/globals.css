@@ -7,6 +7,9 @@
   --foreground: #171717;
   --secondary: #CCFBEF;
   --primary: #115E56;
+  --captionGray: #667085;
+  --text-up: #15B79F;
+  --text-drop: #F04438;
 }
 
 /* @media (prefers-color-scheme: dark) {
