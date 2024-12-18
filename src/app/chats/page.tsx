@@ -1,13 +1,9 @@
 "use client";
 
-import DataCard from "@/components/Card";
 import Typography from "@/components/Typography";
-import { BaseCard } from "@/components/Card";
-import Icon from "@/components/Icon";
 import Table from "@/components/Table";
-import BaseButton from "@/components/Button";
-import { usePathname } from "next/navigation";
 import ModuleNav from "@/app/components/ModuleNav";
+
 interface TitleBodyProps {
   title?: string;
   children?: React.ReactNode;
