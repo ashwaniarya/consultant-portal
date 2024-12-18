@@ -6,6 +6,9 @@ import { BaseCard } from "@/components/Card";
 import Icon from "@/components/Icon";
 import Table from "@/components/Table";
 import ModuleNav from "@/app/components/ModuleNav";
+import Consulations from "@/app/components/Consulations";
+import PastPeriod from "@/app/components/PastPeriod";
+
 interface TitleBodyProps {
   title?: string;
   children?: React.ReactNode;
@@ -38,42 +41,80 @@ export default function Home() {
             <div className="flex flex-col gap-4">
               <div className="flex gap-4">
                 <DataCard
-                  title="CONSULTINGS"
+                  title={
+                    <div className="flex flex-row gap-2 items-center">
+                      <Icon type="plan-chat" size={12} />
+                      <Typography variant="caption">CONSULTATIONS</Typography>
+                    </div>
+                  }
                   value="24"
                   type="increase"
                   percent={"100 %"}
+                  className="flex-1"
                 />
                 <DataCard
-                  title="CONSULTINGS"
+                  title={
+                    <div className="flex flex-row gap-2 items-center">
+                      <Icon type="price-tag" size={12} />
+                      <Typography variant="caption">ORDERS PLACED</Typography>
+                    </div>
+                  }
                   value="24"
-                  type="increase"
+                  type="decrease"
                   percent={"100 %"}
+                  className="flex-1"
                 />
                 <DataCard
-                  title="CONSULTINGS"
+                  title={
+                    <div className="flex flex-row gap-2 items-center">
+                      <Icon type="check-fat" size={12} />
+                      <Typography variant="caption">CONVERSION</Typography>
+                    </div>
+                  }
                   value="24"
-                  type="increase"
+                  type="decrease"
                   percent={"100 %"}
+                  className="flex-1"
                 />
               </div>
               <div className="flex gap-4">
                 <DataCard
-                  title="CONSULTINGS"
-                  value="24"
+                  title={
+                    <div className="flex flex-row gap-2 items-center">
+                      <Icon type="coin-stack" size={12} />
+                      <Typography variant="caption">
+                        TOTAL SALES VALUE
+                      </Typography>
+                    </div>
+                  }
+                  value="$ 24,000"
                   type="increase"
                   percent={"100 %"}
+                  className="flex-1"
                 />
                 <DataCard
-                  title="CONSULTINGS"
+                  title={
+                    <div className="flex flex-row gap-2 items-center">
+                      <Icon type="coins" size={12} />
+                      <Typography variant="caption">AVG ORDER VALUE</Typography>
+                    </div>
+                  }
                   value="24"
                   type="increase"
                   percent={"100 %"}
+                  className="flex-1"
                 />
                 <DataCard
-                  title="CONSULTINGS"
-                  value="24"
+                  title={
+                    <div className="flex flex-row gap-2 items-center">
+                      <Icon type="piggy-bank" size={12} />
+                      <Typography variant="caption">COMMISSION PAID</Typography>
+                    </div>
+                  }
+                  value="$ 240"
                   type="increase"
                   percent={"100 %"}
+                  className="flex-1"
                 />
               </div>
             </div>
@@ -82,9 +123,36 @@ export default function Home() {
             <div className="flex flex-col gap-4">
               <div className="flex gap-4">
                 <BaseCard
-                  title="FORCASTING"
+                  title={
+                    <div className="flex flex-row gap-2 items-center">
+                      <Icon type="plan-chat" size={12} />
+                      <Typography variant="caption">CONSULTATIONS</Typography>
+                    </div>
+                  }
+                  className="flex-[2] "
+                >
+                  <Consulations />
+                </BaseCard>
+                <BaseCard
+                  title={
+                    <div className="flex flex-row gap-2 items-center">
+                      <Icon type="plan-chat" size={12} />
+                      <Typography variant="caption">VS PAST PERIOD</Typography>
+                    </div>
+                  }
+                  className="flex-[1] "
+                >
+                  <PastPeriod />
+                </BaseCard>
+                <BaseCard
+                  title={
+                    <div className="flex flex-row gap-2 items-center">
+                      <Icon type="plan-chat" size={12} />
+                      <Typography variant="caption">FORCASTING</Typography>
+                    </div>
+                  }
                   titleClassName="text-white"
-                  className="bg-red-500"
+                  className="bg-red-500 flex-[1]"
                 >
                   <div>
                     <div className="flex gap-2 ">
