@@ -8,7 +8,6 @@ interface BaseButtonProps {
   children: React.ReactNode;
   leftIcon?: string;
   rightIcon?: string;
-  onClick?: () => void;
   className?: string;
   disabled?: boolean;
   containerClassName?: string;
@@ -17,6 +16,7 @@ interface BaseButtonProps {
   rightIconClassName?: string;
   rightIconColor?: string;
   as?: "button" | "a";
+  href?: string;
 }
 
 const BaseButton: React.FC<BaseButtonProps> = ({
@@ -28,10 +28,11 @@ const BaseButton: React.FC<BaseButtonProps> = ({
   rightIcon,
   rightIconClassName,
   rightIconColor,
-  onClick,
   className = "",
   disabled = false,
   as = "button",
+  href,
+  ...rest
 }) => {
   const baseStyles = "flex items-center justify-center gap-2 transition-colors";
 
@@ -44,11 +45,12 @@ const BaseButton: React.FC<BaseButtonProps> = ({
 
   return (
     <Component
-      onClick={onClick}
+      href={href as string}
       disabled={disabled}
       className={`${baseStyles} ${variantStyles[variant]} ${
         disabled ? "opacity-50 cursor-not-allowed" : ""
       } ${className}`}
+      {...rest}
     >
       {leftIcon && (
         <Icon
