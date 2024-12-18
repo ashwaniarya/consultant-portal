@@ -5,8 +5,7 @@ import Typography from "@/components/Typography";
 import { BaseCard } from "@/components/Card";
 import Icon from "@/components/Icon";
 import Table from "@/components/Table";
-import BaseButton from "@/components/Button";
-import { usePathname } from "next/navigation";
+import ModuleNav from "@/app/components/ModuleNav";
 interface TitleBodyProps {
   title?: string;
   children?: React.ReactNode;
@@ -30,117 +29,91 @@ const TitleBody: React.FC<TitleBodyProps> = ({
 };
 
 export default function Home() {
-  const pathname = usePathname();
   return (
     <div>
-      <section className="flex items-center gap-2">
-        {[
-          { icon: "pie-slice", title: "Summary", href: "/" },
-          { icon: "price-tag", title: "Sales", href: "/sales" },
-          { icon: "chat", title: "Chats", href: "/chats" },
-        ].map((item, index) => {
-          const active = pathname === item.href;
-          return (
-            <div key={index} className="flex items-center gap-2">
-              <BaseButton
-                variant="pill"
-                as="a"
-                href={item.href}
-                className={`${active ? "bg-secondary" : "bg-transparent"}`}
-                leftIcon={item.icon}
-                leftIconColor={active ? "black" : "#8A94A6"}
-              >
-                <Typography
-                  variant="body"
-                  className={`${active ? "text-foreground" : "text-gray-500"}`}
+      <ModuleNav />
+      <section className="flex flex-col gap-4 p-4">
+        <div className="flex flex-col gap-4 rounded-lg p-4 border border-gray-200 shadow-sm">
+          <TitleBody title="At a glance" RightComponent={<div>Button</div>}>
+            <div className="flex flex-col gap-4">
+              <div className="flex gap-4">
+                <DataCard
+                  title="CONSULTINGS"
+                  value="24"
+                  type="increase"
+                  percent={"100 %"}
+                />
+                <DataCard
+                  title="CONSULTINGS"
+                  value="24"
+                  type="increase"
+                  percent={"100 %"}
+                />
+                <DataCard
+                  title="CONSULTINGS"
+                  value="24"
+                  type="increase"
+                  percent={"100 %"}
+                />
+              </div>
+              <div className="flex gap-4">
+                <DataCard
+                  title="CONSULTINGS"
+                  value="24"
+                  type="increase"
+                  percent={"100 %"}
+                />
+                <DataCard
+                  title="CONSULTINGS"
+                  value="24"
+                  type="increase"
+                  percent={"100 %"}
+                />
+                <DataCard
+                  title="CONSULTINGS"
+                  value="24"
+                  type="increase"
+                  percent={"100 %"}
+                />
+              </div>
+            </div>
+          </TitleBody>
+          <TitleBody title="Insights">
+            <div className="flex flex-col gap-4">
+              <div className="flex gap-4">
+                <BaseCard
+                  title="FORCASTING"
+                  titleClassName="text-white"
+                  className="bg-red-500"
                 >
-                  {item.title}
-                </Typography>
-              </BaseButton>
-            </div>
-          );
-        })}
-      </section>
-      <section>
-        <TitleBody title="Title" RightComponent={<div>Button</div>}>
-          <div className="flex flex-col gap-4">
-            <div className="flex gap-4">
-              <DataCard
-                title="CONSULTINGS"
-                value="24"
-                type="increase"
-                percent={"100 %"}
-              />
-              <DataCard
-                title="CONSULTINGS"
-                value="24"
-                type="increase"
-                percent={"100 %"}
-              />
-              <DataCard
-                title="CONSULTINGS"
-                value="24"
-                type="increase"
-                percent={"100 %"}
-              />
-            </div>
-            <div className="flex gap-4">
-              <DataCard
-                title="CONSULTINGS"
-                value="24"
-                type="increase"
-                percent={"100 %"}
-              />
-              <DataCard
-                title="CONSULTINGS"
-                value="24"
-                type="increase"
-                percent={"100 %"}
-              />
-              <DataCard
-                title="CONSULTINGS"
-                value="24"
-                type="increase"
-                percent={"100 %"}
-              />
-            </div>
-          </div>
-        </TitleBody>
-        <TitleBody title="Insights">
-          <div className="flex flex-col gap-4">
-            <div className="flex gap-4">
-              <BaseCard
-                title="FORCASTING"
-                titleClassName="text-white"
-                className="bg-red-500"
-              >
-                <div>
-                  <div className="flex gap-2 ">
-                    <Typography variant="h1">+15%</Typography>
-                    <Icon type="trending-up" />
+                  <div>
+                    <div className="flex gap-2 ">
+                      <Typography variant="h1">+15%</Typography>
+                      <Icon type="trending-up" />
+                    </div>
+                    <Typography variant="body" className="text-white">
+                      forecasted increase in your sales closed by the end of the
+                      current month
+                    </Typography>
                   </div>
-                  <Typography variant="body" className="text-white">
-                    forecasted increase in your sales closed by the end of the
-                    current month
-                  </Typography>
-                </div>
-                <div>
-                  <div className="flex gap-2 ">
-                    <Typography variant="h1">+20%</Typography>
-                    <Icon type="trending-up" />
+                  <div>
+                    <div className="flex gap-2 ">
+                      <Typography variant="h1">+20%</Typography>
+                      <Icon type="trending-up" />
+                    </div>
+                    <Typography variant="body" className="text-white">
+                      forecasted increase in your sales closed by the end of the
+                      current month
+                    </Typography>
                   </div>
-                  <Typography variant="body" className="text-white">
-                    forecasted increase in your sales closed by the end of the
-                    current month
-                  </Typography>
-                </div>
-              </BaseCard>
+                </BaseCard>
+              </div>
             </div>
-          </div>
-        </TitleBody>
-        <TitleBody title="Orders">
-          <Table />
-        </TitleBody>
+          </TitleBody>
+          <TitleBody title="Orders">
+            <Table />
+          </TitleBody>
+        </div>
       </section>
     </div>
   );
