@@ -19,6 +19,7 @@ const Typography: React.FC<TypographyProps> = ({
   variant = "body",
   children,
   className = "",
+  ...rest
 }) => {
   const baseStyles = "text-foreground";
 
@@ -30,12 +31,16 @@ const Typography: React.FC<TypographyProps> = ({
     h5: "text-lg font-semibold tracking-tight",
     h6: "text-base font-semibold tracking-tight",
     body: "text-base leading-7",
-    caption: "text-sm text-gray-500",
+    caption:
+      "font-inter font-semibold text-xs leading-7 tracking-wide text-captionGray",
     mono: "font-mono text-sm",
   };
 
   return (
-    <h4 className={`${baseStyles} ${variantStyles[variant]} ${className}`}>
+    <h4
+      className={`${baseStyles} ${variantStyles[variant]} ${className}`}
+      {...rest}
+    >
       {children}
     </h4>
   );
