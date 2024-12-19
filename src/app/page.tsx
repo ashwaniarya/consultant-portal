@@ -15,7 +15,6 @@ const filterOptions = [
 
 export default function Home() {
   const [filter, setFilter] = useState("7 days");
-  const [isConsultationsLoading, setIsConsultationsLoading] = useState(false);
   const handleFilterChange = (filter: string) => {
     setFilter(filter);
   };
