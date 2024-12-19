@@ -20,204 +20,108 @@ const AtGlance: React.FC<AtGlanceProps> = ({
   const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
-    setLoading(true);
-    setError(null);
     const fetchData = async () => {
+      setLoading(true);
+      setError(null);
       const { data: glanceData, error } = await getAtGlance(filter);
-      setLoading(false);
+      setData(glanceData || null);
       setError(error);
-      if (glanceData) {
-        setData(glanceData);
-      }
+      setLoading(false);
     };
     fetchData();
   }, [filter]);
 
-  const handleFilterChange = (filter: string) => {
-    setFilter(filter);
-    onFilterChange(filter);
+  const handleFilterChange = (value: string) => {
+    setFilter(value);
+    onFilterChange(value);
   };
 
-  const showValue = (loadingValue: string | number, value: string | number) => {
-    return loading ? loadingValue : value;
-  };
+  const renderMetricCard = (
+    title: string,
+    iconType: string,
+    metric: any,
+    className: string
+  ) => (
+    <DataCard
+      title={
+        <div className="flex flex-row gap-2 items-center">
+          <Icon type={iconType} size={12} />
+          <Typography variant="overline" className="text-textCaption">
+            {title}
+          </Typography>
+        </div>
+      }
+      value={loading ? "--" : (metric?.value as string)}
+      type={loading ? "--" : (metric?.change?.type as string)}
+      percent={loading ? "--" : (metric?.change?.value as string)}
+      className={`flex-1 min-w-[200px] md:min-w-[250px] ${className}`}
+    />
+  );
+
+  const metrics = [
+    {
+      title: "CONSULTATIONS",
+      icon: "plan-chat",
+      data: data?.consultations,
+    },
+    {
+      title: "ORDERS PLACED",
+      icon: "price-tag",
+      data: data?.orders_placed,
+    },
+    {
+      title: "CONVERSION",
+      icon: "check-fat",
+      data: data?.conversion,
+    },
+    {
+      title: "TOTAL SALES VALUE",
+      icon: "coin-stack",
+      data: data?.total_sales_value,
+    },
+    {
+      title: "AVG ORDER VALUE",
+      icon: "coins",
+      data: data?.avg_order_value,
+    },
+    {
+      title: "COMMISSION PAID",
+      icon: "piggy-bank",
+      data: data?.commission_paid,
+    },
+  ];
 
   return (
     <TitleBody
       title="At a glance"
       RightComponent={
-        <div>
-          <select
-            value={filter}
-            onChange={(e) => handleFilterChange(e.target.value)}
-            className="rounded-lg border border-[#E0E0E0]"
-          >
-            {filterOptions.map((option) => (
-              <option
-                key={option.value}
-                value={option.value}
-                onClick={() => onFilterChange(option.value)}
-                className="border border-[#E0E0E0] p-2 rounded-lg"
-              >
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </div>
+        <select
+          value={filter}
+          onChange={(e) => handleFilterChange(e.target.value)}
+          className="rounded-lg border border-[#E0E0E0]"
+        >
+          {filterOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
       }
     >
       <div className="flex flex-col gap-2 md:gap-4 overflow-x-auto overflow-y-auto lg:overflow-x-visible lg:overflow-y-visible mt-2 md:mt-4">
-        <div className="flex gap-2 md:gap-4 ">
-          <DataCard
-            title={
-              <div className="flex flex-row gap-2 items-center">
-                <Icon type="plan-chat" size={12} />
-                <Typography variant="overline" className="text-textCaption">
-                  CONSULTATIONS
-                </Typography>
-              </div>
-            }
-            value={
-              showValue("--", data?.consultations.value as string) as string
-            }
-            type={
-              showValue(
-                "--",
-                data?.consultations.change.type as string
-              ) as string
-            }
-            percent={
-              showValue(
-                "--",
-                data?.consultations.change.value as number
-              ) as string
-            }
-            className="flex-1 min-w-[200px] md:min-w-[250px]"
-          />
-          <DataCard
-            title={
-              <div className="flex flex-row gap-2 items-center">
-                <Icon type="price-tag" size={12} />
-                <Typography variant="overline" className="text-textCaption">
-                  ORDERS PLACED
-                </Typography>
-              </div>
-            }
-            value={
-              showValue("--", data?.orders_placed.value as string) as string
-            }
-            type={
-              showValue(
-                "--",
-                data?.orders_placed.change.type as string
-              ) as string
-            }
-            percent={
-              showValue(
-                "--",
-                data?.orders_placed.change.value as number
-              ) as string
-            }
-            className="flex-1 min-w-[200px] md:min-w-[250px]"
-          />
-          <DataCard
-            title={
-              <div className="flex flex-row gap-2 items-center">
-                <Icon type="check-fat" size={12} />
-                <Typography variant="overline" className="text-textCaption">
-                  CONVERSION
-                </Typography>
-              </div>
-            }
-            value={showValue("--", data?.conversion.value as string) as string}
-            type={
-              showValue("--", data?.conversion.change.type as string) as string
-            }
-            percent={
-              showValue("--", data?.conversion.change.value as number) as string
-            }
-            className="flex-1 min-w-[200px] md:min-w-[2 50px]"
-          />
+        <div className="flex gap-2 md:gap-4">
+          {metrics.slice(0, 3).map((metric) => (
+            <React.Fragment key={metric.title}>
+              {renderMetricCard(metric.title, metric.icon, metric.data, "")}
+            </React.Fragment>
+          ))}
         </div>
         <div className="flex gap-2 md:gap-4">
-          <DataCard
-            title={
-              <div className="flex flex-row gap-2 items-center">
-                <Icon type="coin-stack" size={12} />
-                <Typography variant="overline" className="text-textCaption">
-                  TOTAL SALES VALUE
-                </Typography>
-              </div>
-            }
-            value={
-              showValue("--", data?.total_sales_value.value as string) as string
-            }
-            type={
-              showValue(
-                "--",
-                data?.total_sales_value.change.type as string
-              ) as string
-            }
-            percent={
-              showValue(
-                "--",
-                data?.total_sales_value.change.value as number
-              ) as string
-            }
-            className="flex-1 min-w-[200px] md:min-w-[250px]"
-          />
-          <DataCard
-            title={
-              <div className="flex flex-row gap-2 items-center">
-                <Icon type="coins" size={12} />
-                <Typography variant="overline" className="text-textCaption">
-                  AVG ORDER VALUE
-                </Typography>
-              </div>
-            }
-            value={
-              showValue("--", data?.avg_order_value.value as string) as string
-            }
-            type={
-              showValue(
-                "--",
-                data?.avg_order_value.change.type as string
-              ) as string
-            }
-            percent={
-              showValue(
-                "--",
-                data?.avg_order_value.change.value as number
-              ) as string
-            }
-            className="flex-1 min-w-[200px] md:min-w-[250px]"
-          />
-          <DataCard
-            title={
-              <div className="flex flex-row gap-2 items-center">
-                <Icon type="piggy-bank" size={12} />
-                <Typography variant="overline" className="text-textCaption">
-                  COMMISSION PAID
-                </Typography>
-              </div>
-            }
-            value={
-              showValue("--", data?.commission_paid.value as string) as string
-            }
-            type={
-              showValue(
-                "--",
-                data?.commission_paid.change.type as string
-              ) as string
-            }
-            percent={
-              showValue(
-                "--",
-                data?.commission_paid.change.value as number
-              ) as string
-            }
-            className="flex-1 min-w-[200px] md:min-w-[250px]"
-          />
+          {metrics.slice(3).map((metric) => (
+            <React.Fragment key={metric.title}>
+              {renderMetricCard(metric.title, metric.icon, metric.data, "")}
+            </React.Fragment>
+          ))}
         </div>
       </div>
     </TitleBody>
