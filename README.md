@@ -11,3 +11,16 @@ It is built as part of hiring challenge.
   Check out `apiService.ts` in `networks` directory
 
 Vercel Link: https://wingman-portal.vercel.app/
+
+# Getting Started
+
+```bash
+npm run dev
+```
+
+# Deploying
+
+```bash
+npm run build
+npm run start
+```

@@ -14,7 +14,6 @@ interface SideBarProps {
 const SideBar: React.FC<SideBarProps> = ({}) => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
 
   const colors = {
@@ -79,8 +78,6 @@ const SideBar: React.FC<SideBarProps> = ({}) => {
         id="default-sidebar"
         className={`fixed top-0 left-0 z-40 w-64 sm:w-[60px] h-screen transition-all duration-300 hover:w-64 bg-primary border-r border-gray-200 sm:translate-x-0 ${sidebarClass}`}
         aria-label="Sidebar"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
       >
         <nav className="flex flex-col gap-2 p-3">
           <div className="flex flex-col gap-2">

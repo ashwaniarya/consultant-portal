@@ -1,8 +1,6 @@
 "use client";
 
 import ModuleNav from "@/app/components/ModuleNav";
-import TitleBody from "@/components/TitleBody";
-import ChatsTable from "../components/ChatsTable";
 import Section from "@/components/Section";
 import Typography from "@/components/Typography";
 
