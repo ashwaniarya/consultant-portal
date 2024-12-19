@@ -16,7 +16,7 @@ type TableDataProps = {
   commission: string;
 };
 
-const columnHelper = createColumnHelper<Person>();
+const columnHelper = createColumnHelper<TableDataProps>();
 
 const columns = [
   columnHelper.accessor("product", {
@@ -45,11 +45,18 @@ const columns = [
   }),
 ];
 
+const data = [
+  {
+    product: "Product 1",
+    date: "2024-01-01",
+    timeSpent: 1,
+    orderValue: 100,
+    commission: "10%",
+  },
+];
 const Table: React.FC = () => {
-  const [data, setData] = React.useState<Person[]>(() => [...defaultData]);
-
   const table = useReactTable({
-    data,
+    data: data,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });

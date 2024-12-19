@@ -5,7 +5,7 @@ import HighchartsReact from "highcharts-react-official";
 import { useEffect } from "react";
 
 interface ChartProps {
-  options: any;
+  options: unknown;
 }
 
 const Chart: React.FC<ChartProps> = ({ options }) => {

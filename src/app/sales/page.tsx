@@ -1,13 +1,11 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import ModuleNav from "@/app/components/ModuleNav";
 import SalesTable from "../components/SalesTable";
 import TitleBody from "@/components/TitleBody";
 import Section from "@/components/Section";
 
 export default function Sales() {
-  const pathname = usePathname();
   return (
     <div>
       <ModuleNav />

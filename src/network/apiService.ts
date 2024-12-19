@@ -246,7 +246,7 @@ export const continueChat = (slug: string, message: string) => {
     timestamp: Date.now()
   });
 
-  const newBotMessage = {
+  const newBotMessage: ChatMessage = {
     text: generateRandomResponse(),
     sender: 'bot',
     timestamp: Date.now() + 1000

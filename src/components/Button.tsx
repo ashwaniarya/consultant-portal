@@ -1,5 +1,4 @@
 import React from "react";
-import Typography from "./Typography";
 import Icon, { IconType } from "./Icon";
 import Link from "next/link";
 

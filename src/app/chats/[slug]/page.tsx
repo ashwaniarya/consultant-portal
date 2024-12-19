@@ -15,7 +15,18 @@ const chatColors = {
   bot: "#666",
 };
 
-export default function Page({ params }: { params: { slug: string } }) {
+type Message = {
+  text: string;
+  sender: "user" | "bot";
+  timestamp: number;
+};
+
+type MessageGroup = {
+  sender: "user" | "bot";
+  messages: string[];
+};
+
+export default function Page() {
   const [slug, setSlug] = useState("");
   const paramsPromise = useParams();
 
@@ -24,9 +35,7 @@ export default function Page({ params }: { params: { slug: string } }) {
   const [customerName, setCustomerName] = useState("");
   const [productName, setProductName] = useState("");
 
-  const [messages, setMessages] = useState<
-    Array<{ text: string; sender: "user" | "bot"; timestamp: number }>
-  >([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -130,7 +139,7 @@ export default function Page({ params }: { params: { slug: string } }) {
           <TitleBody title="Messages" className="mt-2 sm:mt-4">
             <div className="border rounded-lg p-2 sm:p-4 h-[300px] sm:h-[400px] mb-2 sm:mb-4 overflow-y-auto bg-gray-200">
               {messages
-                .reduce((acc: any[], message, index) => {
+                .reduce((acc: MessageGroup[], message: Message, index) => {
                   if (index === 0) {
                     return [{ ...message, messages: [message.text] }];
                   }

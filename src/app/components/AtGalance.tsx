@@ -10,6 +10,14 @@ interface AtGlanceProps {
   filterOptions: { value: string; label: string }[];
 }
 
+type MetricData = {
+  value: string;
+  change?: {
+    type: string;
+    value: string;
+  };
+};
+
 const AtGlance: React.FC<AtGlanceProps> = ({
   onFilterChange,
   filterOptions,
@@ -17,15 +25,12 @@ const AtGlance: React.FC<AtGlanceProps> = ({
   const [filter, setFilter] = React.useState<string>("today");
   const [data, setData] = React.useState<AtGlanceData | null>(null);
   const [loading, setLoading] = React.useState<boolean>(true);
-  const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      setError(null);
-      const { data: glanceData, error } = await getAtGlance(filter);
+      const { data: glanceData } = await getAtGlance(filter);
       setData(glanceData || null);
-      setError(error);
       setLoading(false);
     };
     fetchData();
@@ -39,7 +44,7 @@ const AtGlance: React.FC<AtGlanceProps> = ({
   const renderMetricCard = (
     title: string,
     iconType: string,
-    metric: any,
+    metric: MetricData,
     className: string
   ) => (
     <DataCard
@@ -112,14 +117,24 @@ const AtGlance: React.FC<AtGlanceProps> = ({
         <div className="flex gap-2 md:gap-4">
           {metrics.slice(0, 3).map((metric) => (
             <React.Fragment key={metric.title}>
-              {renderMetricCard(metric.title, metric.icon, metric.data, "")}
+              {renderMetricCard(
+                metric.title,
+                metric.icon,
+                metric.data as unknown as MetricData,
+                ""
+              )}
             </React.Fragment>
           ))}
         </div>
         <div className="flex gap-2 md:gap-4">
           {metrics.slice(3).map((metric) => (
             <React.Fragment key={metric.title}>
-              {renderMetricCard(metric.title, metric.icon, metric.data, "")}
+              {renderMetricCard(
+                metric.title,
+                metric.icon,
+                metric.data as unknown as MetricData,
+                ""
+              )}
             </React.Fragment>
           ))}
         </div>
