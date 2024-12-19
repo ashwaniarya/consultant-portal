@@ -12,7 +12,7 @@ interface BaseCardProps {
 interface DataCardProps extends BaseCardProps {
   title: string | React.ReactNode;
   value: string;
-  type: "increase" | "decrease";
+  type: string;
   percent: string;
   className?: string;
 }
@@ -25,7 +25,7 @@ export const BaseCard: React.FC<BaseCardProps> = ({
 }) => {
   return (
     <div
-      className={`rounded-lg p-4 border border-gray-200 shadow-sm ${className}`}
+      className={`rounded-lg p-4 border border-gray-200 shadow-lg ${className} `}
     >
       {typeof title === "string" ? (
         <Typography variant="h4" className={titleClassName}>
@@ -58,11 +58,13 @@ const DataCard: React.FC<DataCardProps> = ({
         <Typography variant="h4">{value}</Typography>
       </div>
       <div className="flex items-center gap-2">
-        <Icon
-          type={type === "increase" ? "trending-up" : "trending-down"}
-          color={color}
-        />
-        <p className={`${textColor}`}>{percent}</p>
+        {type !== "--" && (
+          <Icon
+            type={type === "increase" ? "trending-up" : "trending-down"}
+            color={color}
+          />
+        )}
+        <p className={`${textColor}`}>{percent}%</p>
         <p className="text-captionGray">{type}</p>
       </div>
     </BaseCard>
