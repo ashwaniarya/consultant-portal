@@ -7,7 +7,6 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import Image from "@/components/Image";
 import BaseButton from "@/components/Button";
 import { getOrders } from "@/network/apiService";
 import { formatDateTime } from "@/helper";

@@ -1,26 +1,25 @@
 "use client";
 
-import DataCard from "@/components/Card";
-import Typography from "@/components/Typography";
-import { BaseCard } from "@/components/Card";
-import Icon from "@/components/Icon";
-import Table from "@/components/Table";
-import BaseButton from "@/components/Button";
 import { usePathname } from "next/navigation";
 import ModuleNav from "@/app/components/ModuleNav";
 import SalesTable from "../components/SalesTable";
 import TitleBody from "@/components/TitleBody";
+import Section from "@/components/Section";
 
 export default function Sales() {
   const pathname = usePathname();
   return (
     <div>
       <ModuleNav />
-      <section>
-        <TitleBody title="Sales">
-          <SalesTable />
-        </TitleBody>
-      </section>
+      <Section className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 rounded-lg p-4 border border-gray-200 shadow-sm">
+          <TitleBody title="Sales">
+            <div className=" overflow-x-auto">
+              <SalesTable />
+            </div>
+          </TitleBody>
+        </div>
+      </Section>
     </div>
   );
 }

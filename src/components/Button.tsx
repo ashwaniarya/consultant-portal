@@ -1,6 +1,6 @@
 import React from "react";
 import Typography from "./Typography";
-import Icon from "./Icon";
+import Icon, { IconType } from "./Icon";
 import Link from "next/link";
 
 interface BaseButtonProps {
@@ -57,7 +57,7 @@ const BaseButton: React.FC<BaseButtonProps> = ({
     >
       {leftIcon && (
         <Icon
-          type={leftIcon}
+          type={leftIcon as IconType}
           className={leftIconClassName}
           color={leftIconColor}
         />
@@ -65,7 +65,7 @@ const BaseButton: React.FC<BaseButtonProps> = ({
       {children}
       {rightIcon && (
         <Icon
-          type={rightIcon}
+          type={rightIcon as IconType}
           className={rightIconClassName}
           color={rightIconColor}
         />

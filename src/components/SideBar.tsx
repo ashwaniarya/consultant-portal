@@ -5,7 +5,7 @@ import Typography from "./Typography";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "@/components/Image";
-import Icon from "./Icon";
+import Icon, { IconType } from "./Icon";
 
 interface SideBarProps {
   className?: string;
@@ -104,7 +104,7 @@ const SideBar: React.FC<SideBarProps> = ({}) => {
               >
                 <div className="flex flex-row gap-4 items-center">
                   <Icon
-                    type={item.icon}
+                    type={item.icon as IconType}
                     size={20}
                     color={active ? colors.primary : colors.secondary}
                     className=""

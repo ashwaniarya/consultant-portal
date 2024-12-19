@@ -25,7 +25,7 @@ export const BaseCard: React.FC<BaseCardProps> = ({
 }) => {
   return (
     <div
-      className={`rounded-lg p-4 border border-gray-200 shadow-lg ${className} `}
+      className={`rounded-[20px] p-2 sm:p-4 md:p-6 border border-medium shadow-medium ${className} `}
     >
       {typeof title === "string" ? (
         <Typography variant="h4" className={titleClassName}>
@@ -54,18 +54,22 @@ const DataCard: React.FC<DataCardProps> = ({
   const textColor = type === "increase" ? "text-textUp" : "text-textDrop";
   return (
     <BaseCard title={title} className={className} {...rest}>
-      <div className="flex flex-row gap-2">
+      <div className="flex flex-row gap-1 sm:gap-2 mt-1 sm:mt-2">
         <Typography variant="h4">{value}</Typography>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1 sm:gap-2 mt-1 sm:mt-2">
         {type !== "--" && (
           <Icon
             type={type === "increase" ? "trending-up" : "trending-down"}
             color={color}
           />
         )}
-        <p className={`${textColor}`}>{percent}%</p>
-        <p className="text-captionGray">{type}</p>
+        <Typography variant="body-2" className={textColor}>
+          {percent}%
+        </Typography>
+        <Typography variant="body-2" className="text-textCaption">
+          {type}
+        </Typography>
       </div>
     </BaseCard>
   );

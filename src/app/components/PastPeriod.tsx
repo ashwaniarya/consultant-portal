@@ -1,12 +1,22 @@
 "use client";
 
 import Chart from "@/components/Chart";
+import { useState } from "react";
+import { getPastPeriodData, PastPeriodData } from "@/network/apiService";
+import { useEffect } from "react";
+import GraphLoading from "@/components/GraphLoading";
 
 interface PastPeriodProps {
   title?: string;
+  orderClosed?: number[];
+  consultations?: number[];
 }
 
-const PastPeriod: React.FC<PastPeriodProps> = ({ title = "" }) => {
+const PastPeriod: React.FC<PastPeriodProps> = ({
+  title = "",
+  orderClosed = [120, 30],
+  consultations = [100, 200],
+}) => {
   const options = {
     title: {
       text: title,
@@ -22,30 +32,24 @@ const PastPeriod: React.FC<PastPeriodProps> = ({ title = "" }) => {
       {
         title: {
           text: "CONSULTATIONS",
+          enabled: false,
         },
         opposite: false, // This axis will be on the left
-      },
-      {
-        min: 0,
-        title: {
-          text: "EXPERTS ONLINE",
-        },
-        opposite: true, // This axis will be on the right
       },
     ],
     series: [
       {
         name: "Consultations",
         type: "column",
-        data: [20, 30],
-        color: "beige",
+        data: consultations,
+        color: "#CCFBEF",
         legendSymbol: "lineMarker",
       },
       {
         name: "Orders closed",
         type: "column",
-        data: [22, 33],
-        color: "green",
+        data: orderClosed,
+        color: "#134E48",
         legendSymbol: "lineMarker",
       },
     ],
@@ -54,4 +58,37 @@ const PastPeriod: React.FC<PastPeriodProps> = ({ title = "" }) => {
   return <Chart options={options} />;
 };
 
-export default PastPeriod;
+interface PastPeriodContainerProps {
+  filter?: string;
+}
+
+const PastPeriodContainer = ({
+  filter = "7 days",
+}: PastPeriodContainerProps) => {
+  const [isDataLoading, setIsDataLoading] = useState(true);
+  const [data, setData] = useState<PastPeriodData | null>(null);
+
+  useEffect(() => {
+    setIsDataLoading(true);
+    getPastPeriodData(filter).then((response) => {
+      setData(response.data);
+      setIsDataLoading(false);
+    });
+  }, []);
+
+  return (
+    <div className="mt-6">
+      {isDataLoading ? (
+        <GraphLoading />
+      ) : (
+        <PastPeriod
+          title={filter}
+          orderClosed={data?.orderClosed}
+          consultations={data?.consultations}
+        />
+      )}
+    </div>
+  );
+};
+
+export default PastPeriodContainer;
