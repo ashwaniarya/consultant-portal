@@ -3,16 +3,19 @@
 import ModuleNav from "@/app/components/ModuleNav";
 import TitleBody from "@/components/TitleBody";
 import ChatsTable from "../components/ChatsTable";
+import Section from "@/components/Section";
 
 export default function Chats() {
   return (
     <div>
       <ModuleNav />
-      <section>
-        <TitleBody title="Chats">
-          <ChatsTable />
-        </TitleBody>
-      </section>
+      <Section className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 rounded-lg p-4 border border-gray-200 shadow-sm">
+          <TitleBody title="All Chats">
+            <ChatsTable />
+          </TitleBody>
+        </div>
+      </Section>
     </div>
   );
 }
