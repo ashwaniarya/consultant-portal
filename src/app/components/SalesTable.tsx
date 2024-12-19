@@ -10,6 +10,9 @@ import {
 import Image from "@/components/Image";
 import BaseButton from "@/components/Button";
 import { getOrders } from "@/network/apiService";
+import { formatDateTime } from "@/helper";
+import Typography from "@/components/Typography";
+import Icon from "@/components/Icon";
 
 type Product = {
   name: string;
@@ -97,7 +100,10 @@ const SalesTable: React.FC<SalesTableProps> = ({ maxRows }) => {
             as="a"
             variant="text"
           >
-            {cell.getValue()}
+            <Typography variant="caption" className="text-textCaptionLight">
+              {cell.getValue()}
+            </Typography>
+            <Icon type="arrow-up-right" color="#8A94A6" size={18} />
           </BaseButton>
         );
       case "commission":
@@ -113,19 +119,7 @@ const SalesTable: React.FC<SalesTableProps> = ({ maxRows }) => {
         return `${hours}h ${minutes}m`;
       case "date":
         const timestamp = cell.getValue();
-        const date = new Date(timestamp);
-        const formattedDate = {
-          date: date.toLocaleDateString("en-US", {
-            day: "2-digit",
-            month: "long",
-            year: "numeric",
-          }),
-          time: date.toLocaleTimeString("en-US", {
-            hour: "numeric",
-            minute: "2-digit",
-            hour12: true,
-          }),
-        };
+        const formattedDate = formatDateTime(timestamp);
         return (
           <div className="flex flex-col">
             <span>{formattedDate.date}</span>
@@ -140,7 +134,7 @@ const SalesTable: React.FC<SalesTableProps> = ({ maxRows }) => {
               alt={cell.getValue().name}
               className="w-8 h-8 rounded-full"
             />
-            <span>{cell.getValue().name}</span>
+            <Typography variant="body">{cell.getValue().name}</Typography>
           </div>
         );
       default:
@@ -166,52 +160,61 @@ const SalesTable: React.FC<SalesTableProps> = ({ maxRows }) => {
   );
 
   return (
-    <div>
-      <table className="w-full border-2 border-gray-200 rounded-xl">
-        <thead className="p-4">
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id} className="rounded-t-xl">
-              {headerGroup.headers.map((header) => (
-                <th key={header.id} className="p-4 text-left min-w-[150px]">
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className="p-4">
-                  {renderCellComponent(cell)}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      <div className="flex justify-center">
+    <div className="border border-medium rounded-xl overflow-hidden">
+      <div className="overflow-x-auto">
+        <table className="w-full">
+          <thead className="p-2 sm:p-4">
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id} className="rounded-t-xl">
+                {headerGroup.headers.map((header) => (
+                  <th
+                    key={header.id}
+                    className="p-2 sm:p-4 text-left min-w-[150px]"
+                  >
+                    {header.isPlaceholder ? null : (
+                      <Typography
+                        variant="body-2"
+                        className="text-tableHeader font-normal"
+                      >
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                      </Typography>
+                    )}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody>
+            {table.getRowModel().rows.map((row) => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id} className="p-2 sm:p-4">
+                    {renderCellComponent(cell)}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="flex flex-wrap justify-center gap-1 mt-4 mb-4">
         <BaseButton
           variant="text"
           onClick={decrementPage}
           disabled={page === 1}
+          className="text-sm"
         >
           Previous
         </BaseButton>
-
         {pages.map((pageNum) => (
           <BaseButton
             key={pageNum}
             variant="text"
             onClick={() => setPage(pageNum)}
-            className={`rounded-full w-8 h-8 flex items-center justify-center ${
+            className={`rounded-full w-6 h-6 sm:w-8 sm:h-8 text-sm flex items-center justify-center ${
               page === pageNum ? "bg-gray-200" : ""
             }`}
           >
@@ -222,6 +225,7 @@ const SalesTable: React.FC<SalesTableProps> = ({ maxRows }) => {
           variant="text"
           onClick={incrementPage}
           disabled={page === totalPages}
+          className="text-sm"
         >
           Next
         </BaseButton>
