@@ -17,6 +17,7 @@ interface BaseButtonProps {
   rightIconColor?: string;
   as?: "button" | "a";
   href?: string;
+  onClick?: () => void;
 }
 
 const BaseButton: React.FC<BaseButtonProps> = ({
@@ -32,6 +33,7 @@ const BaseButton: React.FC<BaseButtonProps> = ({
   disabled = false,
   as = "button",
   href,
+  onClick,
   ...rest
 }) => {
   const baseStyles = "flex items-center justify-center gap-2 transition-colors";
@@ -50,6 +52,7 @@ const BaseButton: React.FC<BaseButtonProps> = ({
       className={`${baseStyles} ${variantStyles[variant]} ${
         disabled ? "opacity-50 cursor-not-allowed" : ""
       } ${className}`}
+      onClick={onClick}
       {...rest}
     >
       {leftIcon && (
@@ -59,12 +62,7 @@ const BaseButton: React.FC<BaseButtonProps> = ({
           color={leftIconColor}
         />
       )}
-      <Typography
-        variant="body"
-        className={variant === "pill" ? "text-background" : ""}
-      >
-        {children}
-      </Typography>
+      {children}
       {rightIcon && (
         <Icon
           type={rightIcon}
