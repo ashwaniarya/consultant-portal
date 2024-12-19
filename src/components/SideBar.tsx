@@ -23,8 +23,8 @@ const SideBar: React.FC<SideBarProps> = ({}) => {
   };
   const menuItems = [
     { icon: "house", title: "Dashboard", href: "/" },
-    { icon: "chat", title: "Chats", href: "/chats" },
-    { icon: "chat", title: "Users", href: "/users" },
+    { icon: "chat-plain", title: "Chats", href: "/chats" },
+    { icon: "user-four", title: "Users", href: "/users" },
   ];
 
   const toggleSidebar = () => {
@@ -97,7 +97,7 @@ const SideBar: React.FC<SideBarProps> = ({}) => {
               <Link
                 key={index}
                 href={item.href}
-                className={`flex items-center gap-2 px-[8px] py-[4px] rounded-lg justify-between overflow-hidden hover:bg-gray-400 box-border ${
+                className={`flex items-center gap-2 px-[8px] py-[4px] rounded-lg justify-between overflow-hidden hover:bg-white/20 box-border mb-2 ${
                   active ? "bg-white" : ""
                 }`}
                 onClick={() => setIsOpen(false)}
@@ -122,6 +122,36 @@ const SideBar: React.FC<SideBarProps> = ({}) => {
             );
           })}
         </nav>
+        <div className="flex flex-col gap-2 p-3 absolute bottom-0 w-full">
+          <Link
+            href="/settings"
+            className={`flex items-center gap-2 px-[8px] py-[4px] rounded-lg justify-between overflow-hidden hover:bg-white/20 box-border mb-2 ${
+              pathname === "/settings" ? "bg-white" : ""
+            }`}
+            onClick={() => setIsOpen(false)}
+          >
+            <div className="flex flex-row gap-4 items-center">
+              <Icon
+                type="gear"
+                size={20}
+                color={
+                  pathname === "/settings" ? colors.primary : colors.secondary
+                }
+                className=""
+              />
+              <div className="flex-1 opacity-1 border-1 border-red-500">
+                <Typography
+                  variant="body"
+                  className={
+                    pathname === "/settings" ? "text-primary" : "text-white"
+                  }
+                >
+                  Settings
+                </Typography>
+              </div>
+            </div>
+          </Link>
+        </div>
       </aside>
     </>
   );
