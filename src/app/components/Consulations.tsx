@@ -1,7 +1,10 @@
 "use client";
 
 import Chart from "@/components/Chart";
-import { useEffect } from "react";
+import GraphLoading from "@/components/GraphLoading";
+import { ConsultationsData } from "@/network/apiService";
+import { getConsultationsData } from "@/network/apiService";
+import { useEffect, useState } from "react";
 
 interface ConsulationsProps {
   title?: string;
@@ -37,6 +40,9 @@ const Consulations: React.FC<ConsulationsProps> = ({
       {
         title: {
           text: "CONSULTATIONS",
+          style: {
+            fontSize: "10px", // adjust the font size as needed
+          },
         },
         opposite: false,
       },
@@ -44,26 +50,29 @@ const Consulations: React.FC<ConsulationsProps> = ({
         min: 0,
         title: {
           text: "EXPERTS ONLINE",
+          style: {
+            fontSize: "10px", // adjust the font size as needed
+          },
         },
         opposite: true,
       },
     ],
     series: [
       {
-        type: "spline",
-        data: consultations.answered,
-        color: "#0f0",
-        marker: "",
-        yAxis: 0,
-        name: "Answered",
-      },
-      {
         name: "Incoming",
         type: "spline",
         data: consultations.incoming,
-        color: "#eee",
+        color: "#8A94A6",
         marker: "",
         legendSymbol: "lineMarker",
+      },
+      {
+        type: "spline",
+        data: consultations.answered,
+        color: "#15B79F",
+        marker: "",
+        yAxis: 0,
+        name: "Answered",
       },
       {
         name: "",
@@ -80,7 +89,7 @@ const Consulations: React.FC<ConsulationsProps> = ({
         name: "Experts online",
         type: "column",
         data: expertsOnline,
-        color: "yellow",
+        color: "#FFF3C6",
         legendSymbol: "lineMarker",
       },
     ],
@@ -111,4 +120,31 @@ const Consulations: React.FC<ConsulationsProps> = ({
   return <Chart options={options} />;
 };
 
-export default Consulations;
+const ConsulationsContainer = ({ filter }: { filter: string }) => {
+  const [isDataLoading, setIsDataLoading] = useState(true);
+  const [data, setData] = useState<ConsultationsData | null>(null);
+
+  useEffect(() => {
+    setIsDataLoading(true);
+    getConsultationsData(filter).then((response) => {
+      setData(response.data);
+      setIsDataLoading(false);
+    });
+  }, [filter]);
+
+  return (
+    <div className="mt-6 min-h-[200px]">
+      {isDataLoading ? (
+        <GraphLoading />
+      ) : (
+        <Consulations
+          categories={data?.categories}
+          consultations={data?.consultations}
+          expertsOnline={data?.expertsOnline}
+        />
+      )}
+    </div>
+  );
+};
+
+export default ConsulationsContainer;
