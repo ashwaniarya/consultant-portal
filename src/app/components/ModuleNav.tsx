@@ -1,6 +1,9 @@
 import { usePathname } from "next/navigation";
 import BaseButton from "../../components/Button";
 import Typography from "../../components/Typography";
+import Icon from "@/components/Icon";
+import Link from "next/link";
+import Section from "@/components/Section";
 
 interface ModuleNavProps {
   modules?: Array<{
@@ -20,32 +23,35 @@ const ModuleNav: React.FC<ModuleNavProps> = ({
   const pathname = usePathname();
 
   return (
-    <section className="flex items-center gap-2 p-4">
+    <Section className="flex items-center gap-2 border-b border-gray-200">
       <div className="flex items-center gap-2 overflow-x-auto">
         {modules.map((item, index) => {
           const active = pathname === item.href;
           return (
             <div key={index} className="flex items-center gap-2">
-              <BaseButton
-                variant="pill"
-                as="a"
+              <Link
                 href={item.href}
-                className={`${active ? "bg-secondary" : "bg-transparent"}`}
-                leftIcon={item.icon}
-                leftIconColor={active ? "black" : "#8A94A6"}
+                className={`flex items-center gap-2 px-3 sm:px-3 py-2 sm:py-2 rounded-full ${
+                  active ? "bg-secondary" : "bg-transparent"
+                }`}
               >
+                <Icon
+                  type={item.icon}
+                  size={20}
+                  color={active ? "black" : "#8A94A6"}
+                />
                 <Typography
-                  variant="body"
+                  variant="h6"
                   className={`${active ? "text-foreground" : "text-gray-500"}`}
                 >
                   {item.title}
                 </Typography>
-              </BaseButton>
+              </Link>
             </div>
           );
         })}
       </div>
-    </section>
+    </Section>
   );
 };
 
