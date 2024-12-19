@@ -10,6 +10,11 @@ import Section from "@/components/Section";
 import BaseButton from "@/components/Button";
 import { useParams } from "next/navigation";
 
+const chatColors = {
+  user: "#1E88E5",
+  bot: "#666",
+};
+
 export default function Page({ params }: { params: { slug: string } }) {
   const [slug, setSlug] = useState("");
   const paramsPromise = useParams();
@@ -123,7 +128,7 @@ export default function Page({ params }: { params: { slug: string } }) {
             </div>
           </TitleBody>
           <TitleBody title="Messages" className="mt-2 sm:mt-4">
-            <div className="border rounded-lg p-2 sm:p-4 h-[300px] sm:h-[400px] mb-2 sm:mb-4 overflow-y-auto">
+            <div className="border rounded-lg p-2 sm:p-4 h-[300px] sm:h-[400px] mb-2 sm:mb-4 overflow-y-auto bg-gray-200">
               {messages
                 .reduce((acc: any[], message, index) => {
                   if (index === 0) {
@@ -177,7 +182,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                         >
                           <path
                             d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 6C13.66 6 15 7.34 15 9C15 10.66 13.66 12 12 12C10.34 12 9 10.66 9 9C9 7.34 10.34 6 12 6ZM12 20C9.33 20 7 18.67 7 16C7 13.33 9.33 12 12 12C14.67 12 17 13.33 17 16C17 18.67 14.67 20 12 20Z"
-                            fill="#1E88E5"
+                            fill={chatColors.bot}
                           />
                           <circle cx="12" cy="9" r="2" fill="#1E88E5" />
                           <rect
@@ -186,7 +191,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                             width="8"
                             height="2"
                             rx="1"
-                            fill="#1E88E5"
+                            fill={chatColors.user}
                           />
                         </svg>
                       </div>
@@ -198,8 +203,8 @@ export default function Page({ params }: { params: { slug: string } }) {
                             key={msgIndex}
                             className={`p-2 rounded-lg ${
                               messageGroup.sender === "user"
-                                ? "bg-blue-100 max-w-[90%] sm:max-w-[80%]"
-                                : "bg-gray-100 max-w-[90%] sm:max-w-[80%]"
+                                ? "bg-[#CCFBEF]/60 max-w-[90%] sm:max-w-[80%]"
+                                : "bg-[#CCFBEF]/60 max-w-[90%] sm:max-w-[80%]"
                             }`}
                           >
                             {text}
