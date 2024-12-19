@@ -8,37 +8,13 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-type Person = {
+type TableDataProps = {
   product: string;
   date: string;
   timeSpent: number;
   orderValue: number;
   commission: string;
 };
-
-const defaultData: Person[] = [
-  {
-    product: "Product 1",
-    date: "2024-01-15",
-    timeSpent: 2.5,
-    orderValue: 100,
-    commission: "$10",
-  },
-  {
-    product: "Product 2",
-    date: "2024-01-16",
-    timeSpent: 1.5,
-    orderValue: 200,
-    commission: "$20",
-  },
-  {
-    product: "Product 3",
-    date: "2024-01-17",
-    timeSpent: 3.0,
-    orderValue: 150,
-    commission: "$15",
-  },
-];
 
 const columnHelper = createColumnHelper<Person>();
 
@@ -108,22 +84,6 @@ const Table: React.FC = () => {
             </tr>
           ))}
         </tbody>
-        {/* <tfoot>
-          {table.getFooterGroups().map((footerGroup) => (
-            <tr key={footerGroup.id}>
-              {footerGroup.headers.map((header) => (
-                <th key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.footer,
-                        header.getContext()
-                      )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </tfoot> */}
       </table>
     </div>
   );
