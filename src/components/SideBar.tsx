@@ -1,19 +1,21 @@
 "use client";
 
-import React, { useState } from "react";
-import BaseButton from "./Button";
+import React, { useState, useEffect, useRef } from "react";
 import Typography from "./Typography";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "@/components/Image";
+import Icon from "./Icon";
 
 interface SideBarProps {
   className?: string;
 }
 
-const SideBar: React.FC<SideBarProps> = ({ className = "" }) => {
+const SideBar: React.FC<SideBarProps> = ({}) => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const sidebarRef = useRef<HTMLDivElement>(null);
 
   const colors = {
     primary: "#115E56",
@@ -29,8 +31,24 @@ const SideBar: React.FC<SideBarProps> = ({ className = "" }) => {
     setIsOpen(!isOpen);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target as Node) &&
+        window.innerWidth < 640 // Only for mobile screens
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const sidebarClass = isOpen ? "translate-x-0 " : "translate-x-[-300px] ";
-  console.log(sidebarClass);
   return (
     <>
       <button
@@ -38,7 +56,7 @@ const SideBar: React.FC<SideBarProps> = ({ className = "" }) => {
         data-drawer-toggle="default-sidebar"
         aria-controls="default-sidebar"
         type="button"
-        className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        className="fixed top-0 left-0 w-[calc(100%)] inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 bg-white"
         onClick={toggleSidebar}
       >
         <span className="sr-only">Open sidebar</span>
@@ -57,38 +75,50 @@ const SideBar: React.FC<SideBarProps> = ({ className = "" }) => {
         </svg>
       </button>
       <aside
+        ref={sidebarRef}
         id="default-sidebar"
-        className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform bg-white border-r border-gray-200 sm:translate-x-0 ${sidebarClass}`}
+        className={`fixed top-0 left-0 z-40 w-64 sm:w-[60px] h-screen transition-all duration-300 hover:w-64 bg-primary border-r border-gray-200 sm:translate-x-0 ${sidebarClass}`}
         aria-label="Sidebar"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
-        <nav className="flex flex-col gap-2">
+        <nav className="flex flex-col gap-2 p-3">
           <div className="flex flex-col gap-2">
             <Link href="/">
-              <Image src="/logo.png" alt="Wingman" width={40} height={40} />
+              <Image src="/logo.png" alt="Wingman" width={34} height={34} />
             </Link>
+          </div>
+          <div className="px-1">
+            <div className="h-[1px] bg-primaryDark my-2 px-2"></div>
           </div>
           {menuItems.map((item, index) => {
             const active = pathname === item.href;
             return (
-              <BaseButton
+              <Link
                 key={index}
-                variant="text"
-                as="a"
                 href={item.href}
-                className={`justify-start rounded-lg ${
+                className={`flex items-center gap-2 px-[8px] py-[4px] rounded-lg justify-between overflow-hidden hover:bg-gray-400 box-border ${
                   active ? "bg-white" : ""
                 }`}
-                leftIcon={item.icon}
-                leftIconColor={active ? colors.primary : colors.secondary}
                 onClick={() => setIsOpen(false)}
               >
-                <Typography
-                  variant="body"
-                  className={active ? "text-foreground" : "text-gray-500"}
-                >
-                  {item.title}
-                </Typography>
-              </BaseButton>
+                <div className="flex flex-row gap-4 items-center">
+                  <Icon
+                    type={item.icon}
+                    size={20}
+                    color={active ? colors.primary : colors.secondary}
+                    className=""
+                  />
+                  <div className="flex-1 opacity-1 border-1 border-red-500">
+                    <Typography
+                      variant="body"
+                      className={active ? "text-primary" : "text-white"}
+                    >
+                      {item.title}
+                    </Typography>
+                  </div>
+                </div>
+              </Link>
             );
           })}
         </nav>
