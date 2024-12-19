@@ -1,7 +1,7 @@
 import React from "react";
 import TitleBody from "@/components/TitleBody";
 import DataCard from "@/components/Card";
-import Icon from "@/components/Icon";
+import Icon, { IconType } from "@/components/Icon";
 import Typography from "@/components/Typography";
 import { AtGlanceData, getAtGlance } from "@/network/apiService";
 
@@ -45,7 +45,7 @@ const AtGlance: React.FC<AtGlanceProps> = ({
     <DataCard
       title={
         <div className="flex flex-row gap-2 items-center">
-          <Icon type={iconType} size={12} />
+          <Icon type={iconType as IconType} size={12} />
           <Typography variant="overline" className="text-textCaption">
             {title}
           </Typography>

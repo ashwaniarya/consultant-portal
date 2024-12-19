@@ -203,8 +203,8 @@ export default function Page({ params }: { params: { slug: string } }) {
                             key={msgIndex}
                             className={`p-2 rounded-lg ${
                               messageGroup.sender === "user"
-                                ? "bg-[#CCFBEF]/60 max-w-[90%] sm:max-w-[80%]"
-                                : "bg-[#CCFBEF]/60 max-w-[90%] sm:max-w-[80%]"
+                                ? "bg-[#CCFBEF] max-w-[90%] sm:max-w-[80%]"
+                                : "bg-[white] max-w-[90%] sm:max-w-[80%]"
                             }`}
                           >
                             {text}
