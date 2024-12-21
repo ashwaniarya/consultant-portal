@@ -14,6 +14,12 @@ Vercel Link: https://wingman-portal.vercel.app/
 
 # Getting Started
 
+Make sure you have nodejs 14+ installed and npm is accessible on the terminal
+
+```bash
+npm i
+```
+
 ```bash
 npm run dev
 ```
