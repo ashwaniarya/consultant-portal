@@ -14,13 +14,13 @@ export const formatDateTime = (timestamp: string | number) => {
   };
 };
 
-export const throttle = <T extends (...args: any[]) => any>(
+export const throttle = <T extends (...args: never[]) => never>(
   func: T,
   limit: number
 ): ((...args: Parameters<T>) => void) => {
   let inThrottle: boolean = false;
 
-  return function (this: any, ...args: Parameters<T>) {
+  return function (this: never, ...args: Parameters<T>) {
     if (!inThrottle) {
       func.apply(this, args);
       inThrottle = true;

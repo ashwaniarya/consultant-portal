@@ -110,9 +110,9 @@ function VirtualScroll<T>({
     }
   };
 
-  const throttleHandler = useRef(throttle(onScroll, THROTTLE_TIME));
+  const throttleHandler = useRef(throttle(onScroll as never, THROTTLE_TIME));
 
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement | HTMLTableSectionElement>(null);
 
   const totalHeight = items.length * itemHeight;
   const viewportItems = Math.ceil(height / itemHeight);
