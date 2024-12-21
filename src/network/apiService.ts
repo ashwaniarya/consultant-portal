@@ -132,8 +132,8 @@ type OrdersResponse = {
 
 // Order Generation
 const generateMockOrders = (page: number): OrdersResponse => {
-  const itemsPerPage = 3;
-  const totalOrders = 40;
+  const itemsPerPage = 1000;
+  const totalOrders = 20000;
   const totalPages = Math.ceil(totalOrders / itemsPerPage);
   const startIndex = (page - 1) * itemsPerPage;
   

@@ -11,7 +11,7 @@ export default function Sales() {
       <ModuleNav />
       <Section className="flex flex-col gap-4">
         <div className="flex flex-col gap-4 rounded-lg p-4 border border-gray-200 shadow-sm">
-          <TitleBody title="Sales">
+          <TitleBody title="Sales Table">
             <div className=" overflow-x-auto">
               <SalesTable />
             </div>

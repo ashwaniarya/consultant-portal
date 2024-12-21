@@ -44,7 +44,6 @@ const Typography: React.FC<TypographyProps> = ({
 
   const _finalClassName = `${baseStyles} ${variantStyles[variant]} ${className}`;
   if (variant === "caption") {
-    console.log(_finalClassName);
   }
   return (
     <h4 className={_finalClassName} {...rest}>
